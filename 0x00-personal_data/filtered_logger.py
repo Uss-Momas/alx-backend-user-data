@@ -19,9 +19,7 @@ def filter_datum(fields: List[str], redaction: str, message: str,
     Returns:
         - log message obfuscated
     """
-    msg = []
-    for k_val in message.split(separator):
-        att = sub(r"[^{}=].*".format(k_val.split("=")[0]), redaction,
-                  k_val) if k_val.split("=")[0] in fields else k_val
-        msg.append(att)
-    return ";".join(msg)
+    for field in fields:
+        replicate = f"{field}={redaction}{separator}"
+        message = sub(f"{field}=.*?{separator}", replicate, message)
+    return message
