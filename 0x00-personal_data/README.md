@@ -5,6 +5,7 @@
 2. [logging documentation](https://docs.python.org/3/library/logging.html)
 3. [bcrypt package](https://github.com/pyca/bcrypt/)
 4. [Logging to Files, Setting Levels, and Formatting](https://www.youtube.com/watch?v=-ARI4Cz-awo)
+5. [Regex documentation](https://docs.python.org/3/library/re.html)
 
 ## Requirements
 * All your files will be interpreted/compiled on Ubuntu 18.04 LTS using python3 (version 3.7)
