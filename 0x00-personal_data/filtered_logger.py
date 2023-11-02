@@ -4,11 +4,32 @@ filtered_logger module
 To handle personal data
 """
 import logging
+import mysql.connector
+import os
 from typing import List
 import re
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+PERSONAL_DATA_DB_USERNAME = "root"
+PERSONAL_DATA_DB_HOST = "localhost"
+PERSONAL_DATA_DB_PASSWORD = ""
+PERSONAL_DATA_DB_NAME = ""
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """get_db functions"""
+    PERSONAL_DATA_DB_USERNAME = os.getenv("PERSONAL_DATA_DB_USERNAME")
+    PERSONAL_DATA_DB_HOST = os.getenv("PERSONAL_DATA_DB_HOST")
+    PERSONAL_DATA_DB_PASSWORD = os.getenv("PERSONAL_DATA_DB_PASSWORD")
+    PERSONAL_DATA_DB_NAME = os.getenv("PERSONAL_DATA_DB_NAME")
+    connection = mysql.connector.connect(
+        host=PERSONAL_DATA_DB_HOST,
+        user=PERSONAL_DATA_DB_USERNAME,
+        password=PERSONAL_DATA_DB_PASSWORD,
+        database=PERSONAL_DATA_DB_NAME
+    )
+    return connection
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
