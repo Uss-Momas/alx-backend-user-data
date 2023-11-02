@@ -80,3 +80,25 @@ class RedactingFormatter(logging.Formatter):
         record.msg = filter_datum(self.fields, self.REDACTION,
                                   record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
+
+
+def main() -> None:
+    """Main function to be executed when filtered_loger is
+    called
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    data = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+    logger = get_logger()
+    for row in data:
+        message = f"name={row[0]};email={row[1]};phone={row[2]};ssn={row[3]};\
+password={row[4]};ip={row[5]};last_login={row[6]};user_agent={row[7]};"
+        logger.info(message)
+
+
+if __name__ == "__main__":
+    main()
