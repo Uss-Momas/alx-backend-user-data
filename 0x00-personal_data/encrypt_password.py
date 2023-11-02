@@ -3,10 +3,9 @@
 encrypt_password module
 """
 import bcrypt
-from typing import ByteString
 
 
-def hash_password(password: str) -> ByteString:
+def hash_password(password: str) -> bytes:
     """
     hash_password function
     Args:
