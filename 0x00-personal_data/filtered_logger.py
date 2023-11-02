@@ -4,7 +4,7 @@ filtered_logger module
 To handle personal data
 """
 from typing import List
-from re import sub
+import re
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
@@ -12,5 +12,5 @@ def filter_datum(fields: List[str], redaction: str, message: str,
     """filter_datum function retuns a obsfucated log message"""
     for field in fields:
         replicate = f"{field}={redaction}{separator}"
-        message = sub(f"{field}=.*?{separator}", replicate, message)
+        message = re.sub(f"{field}=.*?{separator}", replicate, message)
     return message
