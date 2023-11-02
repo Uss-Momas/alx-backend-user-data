@@ -14,7 +14,6 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 PERSONAL_DATA_DB_USERNAME = "root"
 PERSONAL_DATA_DB_HOST = "localhost"
 PERSONAL_DATA_DB_PASSWORD = ""
-PERSONAL_DATA_DB_NAME = ""
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
