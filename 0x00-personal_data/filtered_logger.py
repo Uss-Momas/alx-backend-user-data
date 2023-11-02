@@ -11,23 +11,18 @@ import re
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
-PERSONAL_DATA_DB_USERNAME = "root"
-PERSONAL_DATA_DB_HOST = "localhost"
-PERSONAL_DATA_DB_PASSWORD = ""
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """get_db functions"""
-    PERSONAL_DATA_DB_USERNAME = os.getenv("PERSONAL_DATA_DB_USERNAME")
-    PERSONAL_DATA_DB_HOST = os.getenv("PERSONAL_DATA_DB_HOST")
-    PERSONAL_DATA_DB_PASSWORD = os.getenv("PERSONAL_DATA_DB_PASSWORD")
-    PERSONAL_DATA_DB_NAME = os.getenv("PERSONAL_DATA_DB_NAME")
+    """get_db functions
+    Returns a new mysql connection connector
+    """
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME", default="root")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", default="localhost")
+    pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", default="")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
     connection = mysql.connector.connection.MySQLConnection(
-        host=PERSONAL_DATA_DB_HOST,
-        user=PERSONAL_DATA_DB_USERNAME,
-        password=PERSONAL_DATA_DB_PASSWORD,
-        database=PERSONAL_DATA_DB_NAME
-    )
+        host=host, user=username, password=pwd, database=db_name)
     return connection
 
 
