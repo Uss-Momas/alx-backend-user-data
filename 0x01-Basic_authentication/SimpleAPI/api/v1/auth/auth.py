@@ -17,7 +17,7 @@ class Auth:
         Args:
             - path: string
             - excluded_paths: list of strings
-        Return:
+        Returns:
             - boolean value
         """
         if path is None:
@@ -39,8 +39,14 @@ class Auth:
         Returns:
             - a string
         """
-        return None
-    
+        # if request is None
+        if not request:
+            return None
+        header = request.headers
+        if not header.get("Authorization"):
+            return None
+        return header.get("Authorization")
+
     def current_user(self, request=None) -> TypeVar('User'):
         """current_user method
         Args:
