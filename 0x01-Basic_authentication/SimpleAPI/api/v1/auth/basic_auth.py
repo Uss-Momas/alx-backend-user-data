@@ -3,8 +3,10 @@
 used for basic authentication
 """
 from api.v1.auth.auth import Auth
+from models.user import User
 import base64
 import binascii
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -73,3 +75,24 @@ class BasicAuth(Auth):
             return None, None
         # email, pwd tuple
         return tuple(decode_base64)
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
+        """user_object_from_credentials method
+        Args:
+            - user_email: email of the user
+            - user_pwd: password of the user
+        Returns:
+            - returns the User instance based on his email and password.
+        """
+        if not user_email or type(user_email) is not str:
+            return None
+        if not user_pwd or type(user_pwd) is not str:
+            return None
+        user_list = User.search({"email": user_email})
+        if len(user_list) == 0:
+            return None
+        user = user_list[0]
+        if not user.is_valid_password(user_pwd):
+            return None
+        return user
