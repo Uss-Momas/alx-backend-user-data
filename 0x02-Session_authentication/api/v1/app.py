@@ -18,8 +18,8 @@ auth = None
 if os.getenv("AUTH_TYPE") == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
-# elif True:
-elif os.getenv("AUTH_TYPE") == "basic_auth":
+elif True:
+# elif os.getenv("AUTH_TYPE") == "basic_auth":
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
@@ -36,6 +36,7 @@ def before_request():
                 abort(401)
             if not auth.current_user(request):
                 abort(403)
+        request.current_user = auth.current_user(request)
 
 
 @app.errorhandler(404)
