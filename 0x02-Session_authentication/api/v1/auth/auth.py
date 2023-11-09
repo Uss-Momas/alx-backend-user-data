@@ -4,6 +4,7 @@ used for basic authentication
 """
 from flask import request
 from typing import List, TypeVar
+import os
 
 
 class Auth:
@@ -55,3 +56,15 @@ class Auth:
             - User object
         """
         return None
+
+    def session_cookie(self, request=None):
+        """session_cookie method
+        Args:
+            - request: request object
+        Returns:
+            - a cookie value from a request
+        """
+        if not request:
+            return None
+        print(request.cookies)
+        return request.cookies.get(os.getenv('SESSION_NAME'))
