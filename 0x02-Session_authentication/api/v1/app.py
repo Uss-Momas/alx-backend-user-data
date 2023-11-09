@@ -31,27 +31,16 @@ elif os.getenv("AUTH_TYPE") == "session_auth":
 @app.before_request
 def before_request():
     """Executed first before anything else"""
-    if auth is None:
-        return
-
-    path = request.path
-    excluded_paths = [
-            '/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/',
-            '/api/v1/auth_session/login/',]
-    if not auth.require_auth(path, excluded_paths):
-        return
-
-    if not auth.authorization_header(request):
-        abort(401)
-
-    if auth.authorization_header(request) is None \
-            and auth.session_cookie(request) is None:
-        abort(401)
-    current_user = auth.current_user(request)
-    if not current_user:
-        abort(403)
-
-    request.current_user = current_user
+    if auth:
+        path = request.path
+        excluded_paths = [
+            '/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+        if auth.require_auth(path, excluded_paths):
+            if not auth.authorization_header(request):
+                abort(401)
+            if not auth.current_user(request):
+                abort(403)
+        request.current_user = auth.current_user(request)
 
 
 @app.errorhandler(404)
