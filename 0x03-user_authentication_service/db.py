@@ -43,7 +43,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Find a specific user
         Args:
             - kwargs: key named values dictionaires
