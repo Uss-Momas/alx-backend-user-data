@@ -38,12 +38,11 @@ class DB:
             - user email
             - user hashed password
         """
-        new_session = self._session
         user = User()
         user.email = email
         user.hashed_password = hashed_password
-        new_session.add(user)
-        new_session.commit()
+        self._session.add(user)
+        self._session.commit()
         return user
 
     def find_user_by(self, **kwargs: dict) -> User:
