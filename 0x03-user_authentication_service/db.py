@@ -68,12 +68,14 @@ class DB:
         Args:
             - user_id
         """
+        user_keys = ['id', 'email', 'hashed_password', 'session_id',
+                     'reset_token']
         for key in kwargs.keys():
-            if hasattr(User, key) is None:
+            if key not in user_keys:
                 raise ValueError
+
         user = self.find_user_by(id=user_id)
+
         for key, value in kwargs.items():
             setattr(user, key, value)
-        session = self._session
-        session.add(user)
-        session.commit()
+        self._session.commit()
