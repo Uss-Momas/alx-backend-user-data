@@ -48,11 +48,16 @@ class DB:
         Args:
             - kwargs: key named values dictionaires
         """
-        session = self._session
-        for key, value in kwargs.items():
-            if hasattr(User, key) is None:
+        if not kwargs:
+            raise InvalidRequestError
+
+        columns = User.__table__.columns.keys()
+
+        for key in kwargs.keys():
+            if key not in columns:
                 raise InvalidRequestError
-        user = session.query(User).filter_by(**kwargs).first()
+
+        user = self._session.query(User).filter_by(**kwargs).first()
         if user is None:
             raise NoResultFound
         return user
