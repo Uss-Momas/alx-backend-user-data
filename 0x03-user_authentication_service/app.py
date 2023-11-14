@@ -94,11 +94,12 @@ def update_password():
 
     if not email or not reset_token or not new_pwd:
         abort(403)
-        try:
-            AUTH.update_password(reset_token, new_pwd)
-        except ValueError:
-            abort(403)
-        return jsonify({"email": email, "message": "Password updated"})
+    try:
+        AUTH.update_password(reset_token, new_pwd)
+    except ValueError:
+        abort(403)
+
+    return jsonify({"email": email, "message": "Password updated"})
 
 
 if __name__ == "__main__":
